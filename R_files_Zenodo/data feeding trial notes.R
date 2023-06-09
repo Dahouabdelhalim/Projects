@@ -1,0 +1,71 @@
+## Connors, Malenke and Dearing submission to Molecular Ecology
+## R script for statistical analyses
+
+## load data as anova.csv
+anova
+head(anova)
+str(anova)
+
+anova1 <- cbind(anova, (anova$food/anova$end))
+names(anova1)
+names(anova1)[13] <- "foodBM"
+head(anova1)
+par(mfrow=c(2,1), mar=c(3,4,2,1))
+hist(anova1$foodBM)
+qqnorm(anova1$foodBM)
+qqline((anova1$foodBM), lty=2)
+shapiro.test(anova1$foodBM)
+a = aov(foodBM ~ temp + diet + temp*diet, data= anova1)
+summary(a)
+print(model.tables(a, "means", digits=2))
+TukeyHSD(a)
+
+anova2 <- cbind(anova, (anova$resin/anova$end))
+names(anova2)
+names(anova2)[13] <- "resinBM"
+head(anova2)
+par(mfrow=c(2,1), mar=c(3,4,2,1))
+hist(anova2$resinBM)
+qqnorm(anova2$resinBM)
+qqline((anova2$resinBM), lty=2)
+shapiro.test(anova2$resinBM)
+a = aov(resinBM ~ temp, data= anova2)
+summary(a)
+print(model.tables(a, "means", digits=2))
+
+par(mfrow=c(2,1), mar=c(3,4,2,1))
+hist(anova$start)
+qqnorm(anova$start)
+qqline((anova$start), lty=2)
+shapiro.test(anova$start)
+d = aov(start ~ temp + diet + temp*diet, data= anova)
+summary(d)
+print(model.tables(d, "means", digits=2))
+
+par(mfrow=c(2,1), mar=c(3,4,2,1))
+hist(anova$end)
+qqnorm(anova$end)
+qqline((anova$end), lty=2)
+shapiro.test(anova$end)
+e = aov(end ~ temp + diet + temp*diet, data= anova)
+summary(e)
+print(model.tables(e, "means", digits=2))
+
+par(mfrow=c(2,1), mar=c(3,4,2,1))
+hist(anova$liver)
+qqnorm(anova$liver)
+qqline((anova$liver), lty=2)
+shapiro.test(anova$liver)
+x = aov(liver ~ temp + diet + temp*diet, data= anova)
+summary(x)
+print(model.tables(x, "means", digits=1))
+
+par(mfrow=c(2,1), mar=c(3,4,2,1))
+hist(anova$pliver)
+qqnorm(anova$pliver)
+qqline((anova$pliver), lty=2)
+shapiro.test(anova$pliver)
+z = aov(pliver ~ temp + diet + temp*diet, data= anova)
+summary(z)
+print(model.tables(z, "means", digits=1))
+TukeyHSD(z)
